@@ -37,8 +37,21 @@ real*8 :: work1(nx,ny,nz)
 real*8 :: work2(nx,ny,nz)
 real*8 :: time
 logical :: doit_model,doit_diag
+integer i,j,k,n,ierr,csig
+integer :: n1,n1d,n2,n2d,n3,n3d,pv_type,stype
 
 real*8 :: tsave
+
+character(len=80) :: message
+character,save :: pow_access="0"
+CPOINTER fid,fidj,fidS,fidcore
+
+! append to output files, unless this is first call.                                                                                       
+if (pow_access=="0") then
+   pow_access="w"
+else
+   pow_access="a"
+endif
 
 if (compute_transfer) then
    ! spec_r computed last time step
@@ -83,5 +96,23 @@ if ( g_bdy_x1==PERIODIC .and. &
 endif
 endif
 
+
+!if (doit_diag == .true.) then ! If you want it every time step comment this out.
+! output data for time series
+if (my_pe==io_pe) then
+   write(message,'(f10.4)') 10000.0000 + time_initial
+   message = rundir(1:len_trim(rundir)) // runname(1:len_trim(runname)) // message(2:10) // ".kepower"
+   call copen(message,pow_access,fid,ierr)
+   write(6,*) "Opening power spectrum file"
+   if (ierr/=0) then
+      write(message,'(a,i5)') "power_output(): Error opening .kepower file errno=",ierr
+      call abortdns(message)
+   endif
+   call cwrite8(fid,time, 1)
+   call cwrite8(fid,Q(5,5,1,1), 1)
+   call cwrite8(fid,Q(5,5,1,2), 1)
+   call cclose(fid,ierr)
+endif
+!endif
 
 end subroutine
