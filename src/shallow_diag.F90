@@ -103,7 +103,7 @@ if (my_pe==io_pe) then
    write(message,'(f10.4)') 10000.0000 + time_initial
    message = rundir(1:len_trim(rundir)) // runname(1:len_trim(runname)) // message(2:10) // ".kepower"
    call copen(message,pow_access,fid,ierr)
-   write(6,*) "Opening power spectrum file"
+!   write(6,*) "Opening power spectrum file"
    if (ierr/=0) then
       write(message,'(a,i5)') "power_output(): Error opening .kepower file errno=",ierr
       call abortdns(message)
@@ -111,6 +111,7 @@ if (my_pe==io_pe) then
    call cwrite8(fid,time, 1)
    call cwrite8(fid,Q(5,5,1,1), 1)
    call cwrite8(fid,Q(5,5,1,2), 1)
+   call cwrite8(fid,Q(5,5,1,3), 1)
    call cclose(fid,ierr)
 endif
 !endif
