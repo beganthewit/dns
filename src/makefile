@@ -222,17 +222,21 @@ endif
 
 ifeq ($(UNAME),Darwin)
 #   MPI =  -DUSE_MPI  -DMPI_REAL8_LAM    -I/sw/include/lammpi
-    MPI = -DUSE_MPI -DMPI_HAS_REAL8 -DUSE_MPI_IO
+#    MPI = -DUSE_MPI -DMPI_HAS_REAL8 -DUSE_MPI_IO
+    MPI = -DUSE_MPI -DMPI_HAS_REAL8 -DUSE_MPI_IO -I/usr/local/include/ # For Mojave 10.14.3
 #   MPILIB = -L/sw/lib/  -llammpio -llamf77mpi -lmpi -llam 
    F90 = mpif90
-   FFLAGS =  -O2  -DGFORTRAN -ffixed-line-length-132 $(MPI) 
+   FFLAGS =  -O2  -DGFORTRAN -ffixed-line-length-132 -std=legacy $(MPI) # For Mojave 10.14.3
+#   FFLAGS =  -O2  -DGFORTRAN -ffixed-line-length-132 $(MPI) 
 #   CC = cc -DG77_UNDERSCORE
+   CC = gcc # For Mojave 10.14.3
 
 #   CC = cc -DF_NO_UNDERSCORE
 #   F90 = xlf95
 #   F77FIXED = -qfixed
 #   FFLAGS = -WF,"-Dflush=flush_,-DNDEBUG"  -qsuffix=cpp=F90   -O2 -qmaxmem=-1 -qstrict 
 #   LDFLAGS = -lSystemStubs
+   LDFLAGS = -L/usr/local/lib  # For Mojave 10.14.3
 endif
 
 

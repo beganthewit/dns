@@ -34,7 +34,7 @@ implicit none
 logical ::  compute_uvw_pdfs=.false.
 logical ::  compute_uvw_jpdfs=.false.
 logical ::  compute_passive_pdfs=.false.
-logical :: compute_zerocrossing_pdfs=.true.
+logical :: compute_zerocrossing_pdfs=.false. ! Changed 14/4/2019
 
 
 
@@ -1409,8 +1409,11 @@ endif
 ndelta=str%delta_num
 
 do j=2,NUM_SF
-ASSERT("ndelta must be the same for all U structure functions",ndelta==str(j)%d!elta_num)
+ASSERT("ndelta must be the same for all U structure functions",ndelta==str%delta_num)
+!The above had to be changed because str has no dimension
+!ASSERT("ndelta must be the same for all U structure functions",ndelta==str(j)%delta_num) 
 enddo
+
 
  str%mn(1)=9e20
  str%mx(1)=-9e20
