@@ -1,0 +1,409 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass extarticle
+\begin_preamble
+\setlength\parindent{0pt}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2.54cm
+\topmargin 2.54cm
+\rightmargin 2.54cm
+\bottommargin 2.54cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+\size largest
+Notes on the Taylor Green Vortex
+\end_layout
+
+\begin_layout Standard
+Comparing Domain 
+\begin_inset Formula $(0,2\pi)^{3}$
+\end_inset
+
+ to 
+\begin_inset Formula $(0,1)^{3}$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+B.A.
+ Wingate
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+The Taylor Green vortex solution is used to compare/debug and test DNS codes.
+ The Sandia/LANL DNS code has a domain 
+\begin_inset Formula $(0,1)^{3}$
+\end_inset
+
+ while many DNS codes use the default domain 
+\begin_inset Formula $(0,2\pi)^{3}$
+\end_inset
+
+ and this will cause differences in the solution, such as the energy decay
+ rate, to occur.
+ This document dicusses some of the details of this computation.
+ It has a companion sympy jupyter notebook titled 
+\family typewriter
+\shape italic
+TaylorGreenExperiments.ipynb
+\family default
+\shape default
+.
+\end_layout
+
+\begin_layout Section
+In two-dimensions in 
+\begin_inset Formula $(0,2\pi)^{2}$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+The equations we solve are,
+\begin_inset Formula 
+\begin{eqnarray}
+\frac{\partial u}{\partial t}+u\frac{\partial u}{\partial x}+v\frac{\partial u}{\partial y} & = & -\frac{1}{\rho_{0}}\frac{\partial p}{\partial x}+\nu\left(\frac{\partial^{2}u}{\partial x^{2}}+\frac{\partial^{2}u}{\partial y^{2}}\right),\label{eq:nsu}\\
+\frac{\partial v}{\partial t}+u\frac{\partial v}{\partial x}+v\frac{\partial v}{\partial y} & = & -\frac{1}{\rho_{0}}\frac{\partial p}{\partial y}+\nu\left(\frac{\partial^{2}v}{\partial x^{2}}+\frac{\partial^{2}v}{\partial y^{2}}\right),\label{eq:nsv}\\
+\frac{\partial u}{\partial x}+\frac{\partial v}{\partial y} & = & 0.\label{eq:divu}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+On 
+\begin_inset Formula $\Omega\in(0,2\pi)^{3}$
+\end_inset
+
+ with initial condition,
+\begin_inset Formula 
+\begin{eqnarray*}
+u(\bm{x},0) & = & \sin(x)\cos(y),\\
+v(\bm{x},0) & = & -\cos(x)\sin(y).
+\end{eqnarray*}
+
+\end_inset
+
+ This has the following exact solution,
+\begin_inset Formula 
+\begin{eqnarray*}
+u(\bm{x},t) & = & \sin(x)\cos(y)e^{-2\nu t},\\
+v(\bm{x},t) & = & -\cos(x)\sin(y)e^{-2\nu t},\\
+p(\bm{x},t) & = & -\left(\cos(2x)+\cos(2y)\right)e^{-4\nu t}.
+\end{eqnarray*}
+
+\end_inset
+
+It is quite interesting to me to be reminded that the pressure has to decay
+ like twice the others because the others are nonlinear (it is more like
+ u.u).
+ This therefore has the total energy per unit volume decay like,
+\begin_inset Formula 
+\[
+E=\frac{1}{\Omega}\frac{1}{2}\int_{\Omega}\left(u^{2}+v^{2}\right)d\Omega\quad\Omega\in(0,2\pi)^{2}
+\]
+
+\end_inset
+
+ which gives,
+\begin_inset Formula 
+\begin{eqnarray*}
+E(t) & = & \frac{\pi^{2}}{4\pi^{2}}e^{-4\nu t}\quad\Omega\in(0,2\pi)^{3}\\
+ & = & \frac{1}{4}e^{-4\nu t}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+In two-dimensions in 
+\begin_inset Formula $(0,1)^{2}$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+The equations are the same as (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:nsu"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+)-(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:divu"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), but these are the following changes,
+\end_layout
+
+\begin_layout Standard
+On 
+\begin_inset Formula $\Omega\in(0,1)$
+\end_inset
+
+ with initial condition,
+\begin_inset Formula 
+\begin{eqnarray*}
+u(\bm{x},0) & = & \sin(2\pi x)\cos(2\pi y),\\
+v(\bm{x},0) & = & -\cos(2\pi x)\sin(2\pi y).
+\end{eqnarray*}
+
+\end_inset
+
+ This has the following exact solution,
+\begin_inset Formula 
+\begin{eqnarray*}
+u(\bm{x},t) & = & \sin(2\pi x)\cos(2\pi y)e^{-2\nu(2\pi)^{2}t},\\
+v(\bm{x},t) & = & -\cos(2\pi x)\sin(2\pi y)e^{-2\nu(2\pi)^{2}t},\\
+p(\bm{x},t) & = & -\left(\cos(2\left(2\pi x\right))+\cos(2\left(2\pi y\right))\right)e^{-4\nu(2\pi)^{2}t}.
+\end{eqnarray*}
+
+\end_inset
+
+ This therefore has the total energy decay like,
+\begin_inset Formula 
+\[
+E=\frac{1}{\Omega}\frac{1}{2}\int_{\Omega}\left(u^{2}+v^{2}\right)d\Omega\quad\Omega\in(0,1)^{2}
+\]
+
+\end_inset
+
+ which gives,
+\begin_inset Formula 
+\[
+E(t)=\frac{1}{2}e^{-4\nu(2\pi)^{2}t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+In three-dimensions in 
+\begin_inset Formula $(0,2\pi)^{3}$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+The equations we solve are,
+\begin_inset Formula 
+\begin{eqnarray}
+\frac{\partial u}{\partial t}+u\frac{\partial u}{\partial x}+v\frac{\partial u}{\partial y}+w\frac{\partial u}{\partial z} & = & -\frac{1}{\rho_{0}}\frac{\partial p}{\partial x}+\nu\left(\frac{\partial^{2}u}{\partial x^{2}}+\frac{\partial^{2}u}{\partial y^{2}}+\frac{\partial^{2}u}{\partial z^{2}}\right),\label{eq:nsu-1}\\
+\frac{\partial v}{\partial t}+u\frac{\partial v}{\partial x}+v\frac{\partial v}{\partial y}+w\frac{\partial v}{\partial z} & = & -\frac{1}{\rho_{0}}\frac{\partial p}{\partial y}+\nu\left(\frac{\partial^{2}v}{\partial x^{2}}+\frac{\partial^{2}v}{\partial y^{2}}+\frac{\partial^{2}v}{\partial z^{2}}\right),\label{eq:nsv-1}\\
+\frac{\partial w}{\partial t}+u\frac{\partial w}{\partial x}+v\frac{\partial w}{\partial y}+w\frac{\partial w}{\partial z} & = & -\frac{1}{\rho_{0}}\frac{\partial p}{\partial z}+\nu\left(\frac{\partial^{2}w}{\partial x^{2}}+\frac{\partial^{2}w}{\partial y^{2}}+\frac{\partial^{2}w}{\partial z^{2}}\right),\\
+\frac{\partial u}{\partial x}+\frac{\partial v}{\partial y}+\frac{\partial w}{\partial z} & = & 0.\label{eq:divu-1}
+\end{eqnarray}
+
+\end_inset
+
+On 
+\begin_inset Formula $\Omega\in(0,2\pi)^{3}$
+\end_inset
+
+ with initial condition,
+\begin_inset Formula 
+\begin{eqnarray*}
+u(\bm{x},0) & = & \sin(x)\cos(y)\cos(z),\\
+v(\bm{x},0) & = & -\cos(x)\sin(y)\cos(z).\\
+w(\bm{x},0) & = & 0.
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I think this has exact solution,
+\begin_inset Formula 
+\begin{eqnarray*}
+u(\bm{x},t) & = & \sin(x)\cos(y)\cos(z)e^{-3\nu t},\\
+v(\bm{x},t) & = & -\cos(x)\sin(y)\cos(z)e^{-3\nu t},\\
+w(\bm{x},t) & = & ?\\
+p(\bm{x},t) & = & -\left(\cos(2x)+\cos(2y)\right)\left(\cos(z)\right)^{2}e^{-6\nu t}.
+\end{eqnarray*}
+
+\end_inset
+
+ and therefor this has the following energy,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+E & = & \frac{1}{8\pi^{3}}\frac{1}{2}\int_{\Omega}\left(u^{2}+v^{2}+w^{2}\right)d\Omega\quad\Omega\in(0,2\pi)^{3}\\
+ & \approx & \frac{1}{8\pi^{3}}\frac{1}{2}e^{-6\nu t}\int_{\Omega}\left(u^{2}+v^{2}+w^{2}\right)d\Omega\quad\Omega\in(0,2\pi)^{3}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+In three-dimensions in 
+\begin_inset Formula $(0,1)^{3}$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+The equations we solve are,
+\begin_inset Formula 
+\begin{eqnarray}
+\frac{\partial u}{\partial t}+u\frac{\partial u}{\partial x}+v\frac{\partial u}{\partial y}+w\frac{\partial u}{\partial z} & = & -\frac{1}{\rho_{0}}\frac{\partial p}{\partial x}+\nu\left(\frac{\partial^{2}u}{\partial x^{2}}+\frac{\partial^{2}u}{\partial y^{2}}+\frac{\partial^{2}u}{\partial z^{2}}\right),\label{eq:nsu-1-1}\\
+\frac{\partial v}{\partial t}+u\frac{\partial v}{\partial x}+v\frac{\partial v}{\partial y}+w\frac{\partial v}{\partial z} & = & -\frac{1}{\rho_{0}}\frac{\partial p}{\partial y}+\nu\left(\frac{\partial^{2}v}{\partial x^{2}}+\frac{\partial^{2}v}{\partial y^{2}}+\frac{\partial^{2}v}{\partial z^{2}}\right),\label{eq:nsv-1-1}\\
+\frac{\partial w}{\partial t}+u\frac{\partial w}{\partial x}+v\frac{\partial w}{\partial y}+w\frac{\partial w}{\partial z} & = & -\frac{1}{\rho_{0}}\frac{\partial p}{\partial z}+\nu\left(\frac{\partial^{2}w}{\partial x^{2}}+\frac{\partial^{2}w}{\partial y^{2}}+\frac{\partial^{2}w}{\partial z^{2}}\right),\\
+\frac{\partial u}{\partial x}+\frac{\partial v}{\partial y}+\frac{\partial w}{\partial z} & = & 0.\label{eq:divu-1-1}
+\end{eqnarray}
+
+\end_inset
+
+On 
+\begin_inset Formula $\Omega\in(0,2\pi)^{3}$
+\end_inset
+
+ with initial condition,
+\begin_inset Formula 
+\begin{eqnarray*}
+u(\bm{x},0) & = & \sin(2\pi x)\cos(2\pi y)\cos(2\pi z),\\
+v(\bm{x},0) & = & -\cos(2\pi x)\sin(2\pi y)\cos(2\pi z).\\
+w(\bm{x},0) & = & 0.
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I think this has exact solution,
+\begin_inset Formula 
+\begin{eqnarray*}
+u(\bm{x},t) & = & \sin(2\pi x)\cos(2\pi y)\cos(2\pi z)e^{-3\left(2\pi\right)^{2}\nu t},\\
+v(\bm{x},t) & = & -\cos(2\pi x)\sin(2\pi y)\cos(2\pi z)e^{-3\left(2\pi\right)^{2}\nu t},\\
+w(\bm{x},t) & = & ?\\
+p(\bm{x},t) & = & -\left(\cos(2x2\pi)+\cos(2y2\pi)\right)\left(\cos(2\pi z)\right)^{2}e^{-6\left(2\pi\right)^{2}\nu t}.
+\end{eqnarray*}
+
+\end_inset
+
+ and therefor this has the following energy,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+E & = & \frac{1}{2}\int_{\Omega}\left(u^{2}+v^{2}+w^{2}\right)d\Omega\quad\Omega\in(0,2\pi)^{3}\\
+ & \approx & \frac{1}{2}e^{-6\left(2\pi\right)^{2}\nu t}\int_{\Omega}\left(u^{2}+v^{2}+w^{2}\right)d\Omega\quad\Omega\in(0,2\pi)^{3}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

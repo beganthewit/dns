@@ -1,0 +1,155 @@
+%% LyX 2.3.1-1 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{extarticle}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2.54cm,bmargin=2.54cm,lmargin=2.54cm,rmargin=2.54cm}
+\usepackage{bm}
+\usepackage{esint}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\setlength\parindent{0pt}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+{\LARGE{}Notes on the Taylor Green Vortex}{\LARGE\par}
+
+Comparing Domain $(0,2\pi)^{3}$ to $(0,1)^{3}$ 
+
+B.A. Wingate
+
+\section{Introduction}
+
+The Taylor Green vortex solution is used to compare/debug and test
+DNS codes. The Sandia/LANL DNS code has a domain $(0,1)^{3}$ while
+many DNS codes use the default domain $(0,2\pi)^{3}$ and this will
+cause differences in the solution, such as the energy decay rate,
+to occur. This document dicusses some of the details of this computation.
+It has a companion sympy jupyter notebook titled \texttt{\textit{TaylorGreenExperiments.ipynb}}.
+
+\section{In two-dimensions in $(0,2\pi)^{2}$ }
+
+The equations we solve are,
+\begin{eqnarray}
+\frac{\partial u}{\partial t}+u\frac{\partial u}{\partial x}+v\frac{\partial u}{\partial y} & = & -\frac{1}{\rho_{0}}\frac{\partial p}{\partial x}+\nu\left(\frac{\partial^{2}u}{\partial x^{2}}+\frac{\partial^{2}u}{\partial y^{2}}\right),\label{eq:nsu}\\
+\frac{\partial v}{\partial t}+u\frac{\partial v}{\partial x}+v\frac{\partial v}{\partial y} & = & -\frac{1}{\rho_{0}}\frac{\partial p}{\partial y}+\nu\left(\frac{\partial^{2}v}{\partial x^{2}}+\frac{\partial^{2}v}{\partial y^{2}}\right),\label{eq:nsv}\\
+\frac{\partial u}{\partial x}+\frac{\partial v}{\partial y} & = & 0.\label{eq:divu}
+\end{eqnarray}
+
+On $\Omega\in(0,2\pi)^{3}$ with initial condition,
+\begin{eqnarray*}
+u(\bm{x},0) & = & \sin(x)\cos(y),\\
+v(\bm{x},0) & = & -\cos(x)\sin(y).
+\end{eqnarray*}
+ This has the following exact solution,
+\begin{eqnarray*}
+u(\bm{x},t) & = & \sin(x)\cos(y)e^{-2\nu t},\\
+v(\bm{x},t) & = & -\cos(x)\sin(y)e^{-2\nu t},\\
+p(\bm{x},t) & = & -\left(\cos(2x)+\cos(2y)\right)e^{-4\nu t}.
+\end{eqnarray*}
+It is quite interesting to me to be reminded that the pressure has
+to decay like twice the others because the others are nonlinear (it
+is more like u.u). This therefore has the total energy per unit volume
+decay like,
+\[
+E=\frac{1}{\Omega}\frac{1}{2}\int_{\Omega}\left(u^{2}+v^{2}\right)d\Omega\quad\Omega\in(0,2\pi)^{2}
+\]
+ which gives,
+\begin{eqnarray*}
+E(t) & = & \frac{\pi^{2}}{4\pi^{2}}e^{-4\nu t}\quad\Omega\in(0,2\pi)^{3}\\
+ & = & \frac{1}{4}e^{-4\nu t}
+\end{eqnarray*}
+
+
+\section{In two-dimensions in $(0,1)^{2}$ }
+
+The equations are the same as (\ref{eq:nsu})-(\ref{eq:divu}), but
+these are the following changes,
+
+On $\Omega\in(0,1)$ with initial condition,
+\begin{eqnarray*}
+u(\bm{x},0) & = & \sin(2\pi x)\cos(2\pi y),\\
+v(\bm{x},0) & = & -\cos(2\pi x)\sin(2\pi y).
+\end{eqnarray*}
+ This has the following exact solution,
+\begin{eqnarray*}
+u(\bm{x},t) & = & \sin(2\pi x)\cos(2\pi y)e^{-2\nu(2\pi)^{2}t},\\
+v(\bm{x},t) & = & -\cos(2\pi x)\sin(2\pi y)e^{-2\nu(2\pi)^{2}t},\\
+p(\bm{x},t) & = & -\left(\cos(2\left(2\pi x\right))+\cos(2\left(2\pi y\right))\right)e^{-4\nu(2\pi)^{2}t}.
+\end{eqnarray*}
+ This therefore has the total energy decay like,
+\[
+E=\frac{1}{\Omega}\frac{1}{2}\int_{\Omega}\left(u^{2}+v^{2}\right)d\Omega\quad\Omega\in(0,1)^{2}
+\]
+ which gives,
+\[
+E(t)=\frac{1}{2}e^{-4\nu(2\pi)^{2}t}
+\]
+
+
+\section{In three-dimensions in $(0,2\pi)^{3}$ }
+
+The equations we solve are,
+\begin{eqnarray}
+\frac{\partial u}{\partial t}+u\frac{\partial u}{\partial x}+v\frac{\partial u}{\partial y}+w\frac{\partial u}{\partial z} & = & -\frac{1}{\rho_{0}}\frac{\partial p}{\partial x}+\nu\left(\frac{\partial^{2}u}{\partial x^{2}}+\frac{\partial^{2}u}{\partial y^{2}}+\frac{\partial^{2}u}{\partial z^{2}}\right),\label{eq:nsu-1}\\
+\frac{\partial v}{\partial t}+u\frac{\partial v}{\partial x}+v\frac{\partial v}{\partial y}+w\frac{\partial v}{\partial z} & = & -\frac{1}{\rho_{0}}\frac{\partial p}{\partial y}+\nu\left(\frac{\partial^{2}v}{\partial x^{2}}+\frac{\partial^{2}v}{\partial y^{2}}+\frac{\partial^{2}v}{\partial z^{2}}\right),\label{eq:nsv-1}\\
+\frac{\partial w}{\partial t}+u\frac{\partial w}{\partial x}+v\frac{\partial w}{\partial y}+w\frac{\partial w}{\partial z} & = & -\frac{1}{\rho_{0}}\frac{\partial p}{\partial z}+\nu\left(\frac{\partial^{2}w}{\partial x^{2}}+\frac{\partial^{2}w}{\partial y^{2}}+\frac{\partial^{2}w}{\partial z^{2}}\right),\\
+\frac{\partial u}{\partial x}+\frac{\partial v}{\partial y}+\frac{\partial w}{\partial z} & = & 0.\label{eq:divu-1}
+\end{eqnarray}
+On $\Omega\in(0,2\pi)^{3}$ with initial condition,
+\begin{eqnarray*}
+u(\bm{x},0) & = & \sin(x)\cos(y)\cos(z),\\
+v(\bm{x},0) & = & -\cos(x)\sin(y)\cos(z).\\
+w(\bm{x},0) & = & 0.
+\end{eqnarray*}
+
+I think this has exact solution,
+\begin{eqnarray*}
+u(\bm{x},t) & = & \sin(x)\cos(y)\cos(z)e^{-3\nu t},\\
+v(\bm{x},t) & = & -\cos(x)\sin(y)\cos(z)e^{-3\nu t},\\
+w(\bm{x},t) & = & ?\\
+p(\bm{x},t) & = & -\left(\cos(2x)+\cos(2y)\right)\left(\cos(z)\right)^{2}e^{-6\nu t}.
+\end{eqnarray*}
+ and therefor this has the following energy,
+
+\begin{eqnarray*}
+E & = & \frac{1}{8\pi^{3}}\frac{1}{2}\int_{\Omega}\left(u^{2}+v^{2}+w^{2}\right)d\Omega\quad\Omega\in(0,2\pi)^{3}\\
+ & \approx & \frac{1}{8\pi^{3}}\frac{1}{2}e^{-6\nu t}\int_{\Omega}\left(u^{2}+v^{2}+w^{2}\right)d\Omega\quad\Omega\in(0,2\pi)^{3}
+\end{eqnarray*}
+
+
+\section{In three-dimensions in $(0,1)^{3}$ }
+
+The equations we solve are,
+\begin{eqnarray}
+\frac{\partial u}{\partial t}+u\frac{\partial u}{\partial x}+v\frac{\partial u}{\partial y}+w\frac{\partial u}{\partial z} & = & -\frac{1}{\rho_{0}}\frac{\partial p}{\partial x}+\nu\left(\frac{\partial^{2}u}{\partial x^{2}}+\frac{\partial^{2}u}{\partial y^{2}}+\frac{\partial^{2}u}{\partial z^{2}}\right),\label{eq:nsu-1-1}\\
+\frac{\partial v}{\partial t}+u\frac{\partial v}{\partial x}+v\frac{\partial v}{\partial y}+w\frac{\partial v}{\partial z} & = & -\frac{1}{\rho_{0}}\frac{\partial p}{\partial y}+\nu\left(\frac{\partial^{2}v}{\partial x^{2}}+\frac{\partial^{2}v}{\partial y^{2}}+\frac{\partial^{2}v}{\partial z^{2}}\right),\label{eq:nsv-1-1}\\
+\frac{\partial w}{\partial t}+u\frac{\partial w}{\partial x}+v\frac{\partial w}{\partial y}+w\frac{\partial w}{\partial z} & = & -\frac{1}{\rho_{0}}\frac{\partial p}{\partial z}+\nu\left(\frac{\partial^{2}w}{\partial x^{2}}+\frac{\partial^{2}w}{\partial y^{2}}+\frac{\partial^{2}w}{\partial z^{2}}\right),\\
+\frac{\partial u}{\partial x}+\frac{\partial v}{\partial y}+\frac{\partial w}{\partial z} & = & 0.\label{eq:divu-1-1}
+\end{eqnarray}
+On $\Omega\in(0,2\pi)^{3}$ with initial condition,
+\begin{eqnarray*}
+u(\bm{x},0) & = & \sin(2\pi x)\cos(2\pi y)\cos(2\pi z),\\
+v(\bm{x},0) & = & -\cos(2\pi x)\sin(2\pi y)\cos(2\pi z).\\
+w(\bm{x},0) & = & 0.
+\end{eqnarray*}
+
+I think this has exact solution,
+\begin{eqnarray*}
+u(\bm{x},t) & = & \sin(2\pi x)\cos(2\pi y)\cos(2\pi z)e^{-3\left(2\pi\right)^{2}\nu t},\\
+v(\bm{x},t) & = & -\cos(2\pi x)\sin(2\pi y)\cos(2\pi z)e^{-3\left(2\pi\right)^{2}\nu t},\\
+w(\bm{x},t) & = & ?\\
+p(\bm{x},t) & = & -\left(\cos(2x2\pi)+\cos(2y2\pi)\right)\left(\cos(2\pi z)\right)^{2}e^{-6\left(2\pi\right)^{2}\nu t}.
+\end{eqnarray*}
+ and therefor this has the following energy,
+
+\begin{eqnarray*}
+E & = & \frac{1}{2}\int_{\Omega}\left(u^{2}+v^{2}+w^{2}\right)d\Omega\quad\Omega\in(0,2\pi)^{3}\\
+ & \approx & \frac{1}{2}e^{-6\left(2\pi\right)^{2}\nu t}\int_{\Omega}\left(u^{2}+v^{2}+w^{2}\right)d\Omega\quad\Omega\in(0,2\pi)^{3}
+\end{eqnarray*}
+
+\end{document}
