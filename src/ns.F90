@@ -633,6 +633,15 @@ if (hyper_type==4) then
    endif
 endif
 
+!if (my_pe == io_pe) then
+!print *, 'hyperviscosity values...'
+!print *, 'hyper_scale x, y, z= ', hyper_scale(1,1), hyper_scale(2,1), hyper_scale(3,1)
+!print *, 'mu_scale = ',mu_scale
+!print *, 'hyper_type =', hyper_type
+!print *, 'mu_hyper = ', mu_hyper
+!print *, 'my_hyper_value = ', mu_hyper_value
+!endif
+
 
 ke=0
 ux2ave=0
