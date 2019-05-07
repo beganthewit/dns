@@ -182,7 +182,7 @@ p(\bm{x},t) & = & -\left(\cos(2x)+\cos(2y)\right)e^{-4\nu t}.
 It is quite interesting to me to be reminded that the pressure has to decay
  like twice the others because the others are nonlinear (it is more like
  u.u).
- This therefore has the total energy per unit volume decay like,
+ This therefore has the total energy per unit area decay like,
 \begin_inset Formula 
 \[
 E=\frac{1}{\Omega}\frac{1}{2}\int_{\Omega}\left(u^{2}+v^{2}\right)d\Omega\quad\Omega\in(0,2\pi)^{2}
@@ -195,6 +195,19 @@ E=\frac{1}{\Omega}\frac{1}{2}\int_{\Omega}\left(u^{2}+v^{2}\right)d\Omega\quad\O
 \begin{eqnarray*}
 E(t) & = & \frac{\pi^{2}}{4\pi^{2}}e^{-4\nu t}\quad\Omega\in(0,2\pi)^{3}\\
  & = & \frac{1}{4}e^{-4\nu t}
+\end{eqnarray*}
+
+\end_inset
+
+We can also compute the intitial energy, 
+\begin_inset Formula $E(0),$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+E(0) & = & \frac{1}{4\pi^{2}}\frac{1}{2}\int_{0}^{2\pi}\int_{0}^{2\pi}\sin^{2}(x)\cos^{2}(y)+\cos^{2}(x)\sin^{2}(y)\,dx\,dy\\
+ & = & \frac{1}{4\pi^{2}}\frac{1}{2}(2\pi^{2})=\frac{1}{4}
 \end{eqnarray*}
 
 \end_inset
@@ -269,8 +282,21 @@ E=\frac{1}{\Omega}\frac{1}{2}\int_{\Omega}\left(u^{2}+v^{2}\right)d\Omega\quad\O
  which gives,
 \begin_inset Formula 
 \[
-E(t)=\frac{1}{2}e^{-4\nu(2\pi)^{2}t}
+E(t)=\frac{1}{2}e^{-4\nu(2\pi)^{2}t}.
 \]
+
+\end_inset
+
+ Computing the energy at 
+\begin_inset Formula $t=0$
+\end_inset
+
+,
+\begin_inset Formula 
+\begin{eqnarray*}
+E(0) & = & \frac{1}{1}\frac{1}{2}\int_{0}^{1}\int_{0}^{1}\sin^{2}(2\pi x)\cos^{2}(2\pi y)+\cos^{2}(2\pi x)\sin^{2}(2\pi y)\,dx\,dy\\
+ & = & \frac{1}{2}(\frac{1}{2})=\frac{1}{4}.
+\end{eqnarray*}
 
 \end_inset
 
@@ -326,7 +352,7 @@ p(\bm{x},t) & = & -\left(\cos(2x)+\cos(2y)\right)\left(\cos(z)\right)^{2}e^{-6\n
 
 \end_inset
 
- and therefor this has the following energy,
+ and therefor this has the following energy per unit volume,
 \end_layout
 
 \begin_layout Standard
@@ -334,6 +360,19 @@ p(\bm{x},t) & = & -\left(\cos(2x)+\cos(2y)\right)\left(\cos(z)\right)^{2}e^{-6\n
 \begin{eqnarray*}
 E & = & \frac{1}{8\pi^{3}}\frac{1}{2}\int_{\Omega}\left(u^{2}+v^{2}+w^{2}\right)d\Omega\quad\Omega\in(0,2\pi)^{3}\\
  & \approx & \frac{1}{8\pi^{3}}\frac{1}{2}e^{-6\nu t}\int_{\Omega}\left(u^{2}+v^{2}+w^{2}\right)d\Omega\quad\Omega\in(0,2\pi)^{3}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Computing the initial energy,
+\begin_inset Formula 
+\begin{eqnarray*}
+E(0) & = & \frac{1}{8\pi^{3}}\frac{1}{2}\int_{0}^{2\pi}\int_{0}^{2\pi}\int_{0}^{2\pi}\sin^{2}(x)\cos^{2}(y)\cos^{2}(z)+\cos^{2}(x)\sin^{2}(y)\cos^{2}(z)\,dx\,dy\,dz\\
+ & = & \frac{1}{8\pi^{3}}\frac{1}{2}\left(2\pi^{3}\right)=\frac{1}{8}
 \end{eqnarray*}
 
 \end_inset
@@ -398,6 +437,19 @@ p(\bm{x},t) & = & -\left(\cos(2x2\pi)+\cos(2y2\pi)\right)\left(\cos(2\pi z)\righ
 \begin{eqnarray*}
 E & = & \frac{1}{2}\int_{\Omega}\left(u^{2}+v^{2}+w^{2}\right)d\Omega\quad\Omega\in(0,2\pi)^{3}\\
  & \approx & \frac{1}{2}e^{-6\left(2\pi\right)^{2}\nu t}\int_{\Omega}\left(u^{2}+v^{2}+w^{2}\right)d\Omega\quad\Omega\in(0,2\pi)^{3}
+\end{eqnarray*}
+
+\end_inset
+
+Computing the energy at 
+\begin_inset Formula $t=0,$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+E(0) & = & \frac{1}{1}\frac{1}{2}\int_{0}^{1}\int_{0}^{1}\int_{0}^{1}\sin^{2}(2\pi x)\cos^{2}(2\pi y)\cos^{2}(2\pi z)+\cos^{2}(2\pi x)\sin^{2}(2\pi y)\cos^{2}(2\pi z)\,dx\,dy\,dz\\
+ & = & \frac{1}{1}\frac{1}{2}\left(\frac{1}{4}\right)=\frac{1}{8}
 \end{eqnarray*}
 
 \end_inset
